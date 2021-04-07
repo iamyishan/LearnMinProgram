@@ -1,49 +1,65 @@
 // pages/home/home.js
+// getApp()获取App()产生的示例对象
+// const app = getApp()
+
+// const name = app.globalData.name;
+// const age = app.globalData.age;
+
+// 注册一个页面
+// 页面也有自己的生命周期函数
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  // ------------ 2.初始化数据 -------------------
   data: {
-    name: "yishan",
-    age: 18,
-    students: [{
-        id: 110,
-        name: "kobe",
-        age: 30
-      },
-      {
-        id: 111,
-        name: "james",
-        age: 28
-      },
-      {
-        id: 112,
-        name: "curyy",
-        age: 32
-      },
-      {
-        id: 113,
-        name: "yishan",
-        age: 18
+    message: '哈哈哈',
+    list: []
+  },
+  onLoad() {
+    console.log('onLoad')
+    console.log(this)
+    const _this = this;
+    wx.request({
+      url: 'http://152.136.185.210:7878/api/m5/recommend',
+      success: function (res) {
+        console.log(res)
+        const data = res.data.data.list;
+        _this.setData({
+          list: data
+        })
       }
-    ],
-    counter: 0
+    })
   },
-  handleBtnClick() {
-    // 1.错误做法：界面是不会刷新的
-    // this.data.counter += 1
-    // console.log(this.data.counter)
+  // 页面显示出来时
+  onShow() {
+    console.log('onShow')
+  },
+  // 页面初次渲染完成时
+  onReady() {
+    console.log('onReady')
+  },
+  // 当页面隐藏起来时
+  onHide() {
+    console.log('onHide')
+  },
+  onUnload() {
+    console.log('onUnload')
+  },
 
-    // 2.this.setData()
-    this.setData({
-      counter: this.data.counter + 1
-    })
+  // ------------ 3.监听wxml中相关的一些事件 -------------------
+  handleGetUserInfo(event) {
+    console.log(event.detail.userInfo)
   },
-  handleSubtraction() {
-    this.setData({
-      counter: this.data.counter - 1
-    })
+  handleViewClick() {
+    console.log('哈哈哈被点击了')
+  },
+  // ------------ 4.其他事件 -------------------
+  // 监听页面的滚动
+  onPageScroll(obj){
+    console.log(obj)
+  },
+  onReachBottom(){
+    console.log('页面滚动到顶部')
+  },
+  onPullDownRefresh() {
+    console.log('下拉刷新的事件')
   }
-
 })
