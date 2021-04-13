@@ -1,4 +1,6 @@
 <!--pages/home/home.wxml-->
+<include src="/wxml/header.wxml"/>
+
 <!-- 1.小程序的数据绑定：{{}}-=mustache -->
 <view>hello {{name}}</view>
 <view>我的年龄 {{age}}</view>
@@ -10,5 +12,11 @@
 <view>当前计数:{{counter}}</view>
 <button size="mini" bindtap="handleBtnClick">+</button>
 <button size="mini" bindtap="handleSubtraction">-</button>
+
+
+<import src="/wxml/template.wxml"/>
+<template is="contentItem" data="{{btnText: '按钮', content: '我是模板导入内容'}}" />
+
+<include src="/wxml/nav.wxml"></include>
 
 
