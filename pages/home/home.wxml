@@ -1,14 +1,38 @@
 <!--pages/home/home.wxml-->
-<!-- 1.小程序的数据绑定：{{}}-=mustache -->
-<view>hello {{name}}</view>
-<view>我的年龄 {{age}}</view>
+<!-- 1.事件处理的回顾 -->
+<button bindtap="handleBtnClick" size="mini">按钮</button>
+<button bind:tap="handleBtnClick" size="mini">按钮</button>
+<button catch:tap="handleBtnClick" size="mini">按钮</button>
 
-<!-- 2.列表数据展示 -->
-<view wx:for="{{students}}">{{item.name}}-{{item.age}}</view>
+<!-- 2.常见的一些事件 -->
+<view class="box" bind:touchstart="handleTouchStart" bind:touchmove="handleTouchMove" bind:touchend="handleTouchEnd"
+  bind:tap="handleTap" bind:longpress="handleLongpress">
+  常见的的事件
+</view>
 
-<!-- 3.事件监听改变data -->
-<view>当前计数:{{counter}}</view>
-<button size="mini" bindtap="handleBtnClick">+</button>
-<button size="mini" bindtap="handleSubtraction">-</button>
+<!-- 3.事件对象的分析 -->
+<button id='btn' size="mini" bindtap="handleEventClick" bindtouchend="handleEventEnd">
+  事件对象
+</button>
 
+<view class='outer' id='outer' bindtap='handleOuter'>
+  外层的view
+  <view class='inner' id='inner' bindtap='handleInner'>内存的view</view>
+</view>
 
+<!-- 4.事件的传递参数 -->
+<view class="container">
+  <block wx:for="{{titles}}" wx:key="key">
+    <view class="item" bindtap="handleItemClick" data-index="{{index}}" data-item="{{item}}">
+      {{item}}
+    </view>
+  </block>
+</view>
+<!-- 5.事件冒泡和事件捕获 - catch和bind区别 -->
+<!-- bind: 一层层传递 -->
+<!-- catch: 阻止事件的进一步传递 -->
+<view class="view1" capture-bind:tap="handleCaptureView1"  bindtap='handleBindView1'>
+  <view class="view2" capture-bind:tap="handleCaptureView2" catchtap='handleBindView2'>
+    <view class="view3" capture-bind:tap="handleCaptureView3" bindtap='handleBindView3'></view>
+  </view>
+</view>
