@@ -1,49 +1,59 @@
 // pages/home/home.js
+import request from "../../service/network"
 Page({
+  data: {},
+  onLoad: function () {
+    // 1.原生的方式发送网络请求
+    this.get_data_origin()
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    name: "yishan",
-    age: 18,
-    students: [{
-        id: 110,
-        name: "kobe",
-        age: 30
-      },
-      {
-        id: 111,
-        name: "james",
-        age: 28
-      },
-      {
-        id: 112,
-        name: "curyy",
-        age: 32
-      },
-      {
-        id: 113,
-        name: "yishan",
-        age: 18
+    // 2.使用封装的request发送网络请求
+    // Promise最大的好处就是防止出现回调地狱
+    request({
+      url: 'http://152.136.185.210:7878/api/m5/recommend'
+    }).then(res => {
+      console.log(res)
+    }).catch(
+      err => {
+        console.log(err)
       }
-    ],
-    counter: 0
-  },
-  handleBtnClick() {
-    // 1.错误做法：界面是不会刷新的
-    // this.data.counter += 1
-    // console.log(this.data.counter)
+    )
 
-    // 2.this.setData()
-    this.setData({
-      counter: this.data.counter + 1
-    })
   },
-  handleSubtraction() {
-    this.setData({
-      counter: this.data.counter - 1
-    })
+
+  get_data_origin() {
+    // 发送网络请求
+    // 1.发送最简单的get请求
+    // wx.request({
+    //   url: 'http://152.136.185.210:7878/api/m5/recommend',
+    //   success: function(res) {
+    //     console.log(res)
+    //   }
+    // })
+    // 2.get请求,并且携带参数
+    // wx.request({
+    //   url: 'http://123.207.32.32:8000/home/data',
+    //   data: {
+    //     type: 'sell',
+    //     page: 1
+    //   },
+    //   success: function (res) {
+    //     console.log(res)
+    //   }
+    // })
+    // 3.post请求,并且携带参数
+    // wx.request({
+    //   url: 'http://httpbin.org/post',
+    //   method: 'post',
+    //   data: {
+    //     name: 'coderwhy',
+    //     age: 18
+    //   },
+    //   success: function(res) {
+    //     console.log(res)
+    //   },
+    //   fail: function(err) {
+    //     console.log(err)
+    //   }
+    // })
   }
-
 })
